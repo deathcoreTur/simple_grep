@@ -2,8 +2,9 @@ import re
 
 
 # Check on exist grep and .txt in line
-def check():
+def validate():
     global args
+    command_line = False
     # It should be 'grep'
     first = args[0]
     # It should be filename with .txt extension
@@ -16,7 +17,6 @@ def check():
     else:
         return True
 
-    command_line = input(msg)
     while not command_line:
         command_line = input(msg)
     args = command_line.split()
@@ -39,16 +39,16 @@ def find(file, args):
 
 
 if __name__ == '__main__':
-    command_line = input("Hello, it's grep. Input please your request with 'grep' and another requirements:\n")
+    command_line = False
     while not command_line:
         command_line = input("Hello, it's grep. Input please your request with 'grep' and another requirements:\n")
 
     args = command_line.split()
 
-    right_command = check()
+    right_command = validate()
 
     while not right_command:
-        right_command = check()
+        right_command = validate()
 
     # Deleted 'grep' from list and get filename. As result, args list consists only necessary parameters
     del args[0]
