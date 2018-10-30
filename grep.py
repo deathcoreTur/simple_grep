@@ -2,21 +2,25 @@ import re
 
 
 # Check on exist grep and .txt in line
-def check(args):
-    if args[0] != 'grep' and not args[-1].endswith('.txt'):
-        command_line = input("Please, input line with 'grep' and point out filename.text:\n")
-        args = command_line.split()
-        return check(args)
-    elif args[0] != 'grep' and args[-1].endswith('.txt'):
-        command_line = input("Please, use 'grep' word:\n")
-        args = command_line.split()
-        return check(args)
-    elif not args[-1].endswith('.txt'):
-        command_line = input("Not find txt file:\n")
-        args = command_line.split()
-        return check(args)
+def check():
+    global args
+    # It should be 'grep'
+    first = args[0]
+    # It should be filename with .txt extension
+    last = args[-1]
+
+    if first != 'grep':
+        msg = "Please, input line with 'grep':\n"
+    elif not last.endswith('.txt'):
+        msg = "Not find txt file:\n"
     else:
-        return args
+        return True
+
+    command_line = input(msg)
+    while not command_line:
+        command_line = input(msg)
+    args = command_line.split()
+    return False
 
 
 def find(file, args):
@@ -36,7 +40,15 @@ def find(file, args):
 
 if __name__ == '__main__':
     command_line = input("Hello, it's grep. Input please your request with 'grep' and another requirements:\n")
-    args = check(command_line.split())
+    while not command_line:
+        command_line = input("Hello, it's grep. Input please your request with 'grep' and another requirements:\n")
+
+    args = command_line.split()
+
+    right_command = check()
+
+    while not right_command:
+        right_command = check()
 
     # Deleted 'grep' from list and get filename. As result, args list consists only necessary parameters
     del args[0]
